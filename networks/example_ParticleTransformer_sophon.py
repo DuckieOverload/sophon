@@ -39,7 +39,7 @@ class ParticleTransformerSophonWrapper(torch.nn.Module):
 
         x, padding_mask = self.mod._forward_encoder(features, v=lorentz_vectors, mask=mask)
 
-        with torch.cuda.amp.autocast(enabled=self.mod.use_amp):
+        with torch.amp.autocast("cuda", enabled=self.mod.use_amp):
             x_cls = self.mod._forward_aggregator(x, padding_mask)
             if self.mod.fc is None:
                 return x_cls
